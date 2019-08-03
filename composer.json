@@ -1,0 +1,30 @@
+{
+  "name": "phpcircle/jira-worklogs",
+  "type" : "tool",
+  "description": "Work logger tool for jira",
+  "keywords": ["jira", "worklogs"],
+  "license": "MIT",
+  "require" : {
+    "php": ">=7.2",
+    "symfony/symfony": "^4.1",
+    "symfony/console": "^4.1",
+    "symfony/dotenv": "^4.1",
+    "imliam/laravel-env-set-command": "^1.0.0",
+    "illuminate/container": "^5.8",
+    "guzzlehttp/guzzle": "^6.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.2",
+    "infection/infection": "^0.13.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "PhpCircle\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\App\\": "tests/"
+    }
+  }
+}

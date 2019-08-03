@@ -1,0 +1,31 @@
+{
+    "source": {
+        "directories": [
+            "src"
+        ],
+        "excludes": [
+            "vendor"
+        ]
+    },
+    "timeout": 10,
+    "logs": {
+        "text": "infection.log",
+        "summary": "summary.log",
+        "perMutator": "per-mutator.md",
+        "badge": {
+            "branch": "master"
+        }
+    },
+    "tmpDir": "/tmp",
+    "mutators": {
+        "@default": true,
+        "@function_signature": false
+    },
+    "phpUnit" : {
+        "configDir" : ".",
+        "customPath" : "./vendor/bin/phpunit"
+    },
+    "testFramework":"phpunit",
+    "initialTestsPhpOptions": "-d zend_extension=xdebug.so",
+    "testFrameworkOptions": "-vvv"
+}

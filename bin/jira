@@ -1,0 +1,47 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__ . '/../bootstrap/autoload.php';
+
+use Illuminate\Container\Container;
+use PhpCircle\WorkLogs\Commands\WorkLogCommand;
+use PhpCircle\WorkLogs\Configuration;
+use PhpCircle\Worklogs\Interfaces\ConfigurationInterface;
+use PhpCircle\WorkLogs\Interfaces\EnvInterface;
+use PhpCircle\WorkLogs\Services\EnvConfiguration;
+use Symfony\Component\Console\Application;
+use Symfony\Component\Dotenv\Dotenv;
+
+\date_default_timezone_set('Asia/Manila');
+
+$application = new Application();
+
+$container = new Container();
+
+$dotenv = new Dotenv();
+
+$envPath = __DIR__ . '/../.env';
+
+if (\file_exists($envPath) === false) {
+    $envFile = \fopen($envPath, "w");
+    \fclose($envFile);
+}
+
+$dotenv->load($envPath);
+
+/** Services Registry */
+$container->singleton(EnvInterface::class, function() use ($envPath): EnvInterface{
+    return new EnvConfiguration($envPath);
+});
+$container->bind(ConfigurationInterface::class, function(): ConfigurationInterface{
+    return new Configuration(
+            \getenv('AUTHOR_ID'),
+            \getenv('API_TOKEN')
+    );
+});
+
+
+/** Console Commands Registry */
+$application->add($container->make(WorkLogCommand::class, ['name' => 'worklog']));
+
+$application->run();
