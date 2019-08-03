@@ -1,0 +1,12 @@
+<phpunit >
+    <testsuites>
+        <testsuite name="Unit Tests">
+            <directory suffix="Test.php" phpVersion="7.3.0" phpVersionOperator=">=">tests</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory>src</directory>
+        </whitelist>
+    </filter>
+</phpunit>

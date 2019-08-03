@@ -1,0 +1,607 @@
+Escaped mutants:
+================
+
+Timed Out mutants:
+==================
+
+Not Covered mutants:
+====================
+
+
+1) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/Http/WorkLogApi.php:34    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+      */
+     public function __construct(ConfigurationInterface $configuration)
+     {
+-        $this->client = new Client(['base_uri' => self::URI]);
++        $this->client = new Client([]);
+         $this->configuration = $configuration;
+     }
+     /**
+
+
+2) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/Http/WorkLogApi.php:54    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+      */
+     public function createWorkLog(string $issueNo, float $spentInSeconds, DateTime $logDateTime, ?string $description) : object
+     {
+-        return $this->client->post(self::RESOURCE, ['json' => ['issueKey' => $issueNo, 'timeSpentSeconds' => $spentInSeconds, 'startDate' => $logDateTime->format('Y-m-d'), 'startTime' => $logDateTime->format('H:i:s'), 'description' => $description ?? '[NO_DESCRIPTION]', 'authorAccountId' => $this->configuration->getAuthorId()], 'headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
++        return $this->client->post(self::RESOURCE, ['headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
+     }
+     /**
+      * Get Work logs.
+
+
+3) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/Http/WorkLogApi.php:55    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+      */
+     public function createWorkLog(string $issueNo, float $spentInSeconds, DateTime $logDateTime, ?string $description) : object
+     {
+-        return $this->client->post(self::RESOURCE, ['json' => ['issueKey' => $issueNo, 'timeSpentSeconds' => $spentInSeconds, 'startDate' => $logDateTime->format('Y-m-d'), 'startTime' => $logDateTime->format('H:i:s'), 'description' => $description ?? '[NO_DESCRIPTION]', 'authorAccountId' => $this->configuration->getAuthorId()], 'headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
++        return $this->client->post(self::RESOURCE, ['json' => ['timeSpentSeconds' => $spentInSeconds, 'startDate' => $logDateTime->format('Y-m-d'), 'startTime' => $logDateTime->format('H:i:s'), 'description' => $description ?? '[NO_DESCRIPTION]', 'authorAccountId' => $this->configuration->getAuthorId()], 'headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
+     }
+     /**
+      * Get Work logs.
+
+
+4) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/Http/WorkLogApi.php:58    [M] ArrayItem
+
+--- Original
++++ New
+@@ @@
+      */
+     public function createWorkLog(string $issueNo, float $spentInSeconds, DateTime $logDateTime, ?string $description) : object
+     {
+-        return $this->client->post(self::RESOURCE, ['json' => ['issueKey' => $issueNo, 'timeSpentSeconds' => $spentInSeconds, 'startDate' => $logDateTime->format('Y-m-d'), 'startTime' => $logDateTime->format('H:i:s'), 'description' => $description ?? '[NO_DESCRIPTION]', 'authorAccountId' => $this->configuration->getAuthorId()], 'headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
++        return $this->client->post(self::RESOURCE, ['json' => ['issueKey' => $issueNo, 'timeSpentSeconds' => $spentInSeconds, 'startDate' > $logDateTime->format('Y-m-d'), 'startTime' => $logDateTime->format('H:i:s'), 'description' => $description ?? '[NO_DESCRIPTION]', 'authorAccountId' => $this->configuration->getAuthorId()], 'headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
+     }
+     /**
+      * Get Work logs.
+
+
+5) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/Http/WorkLogApi.php:59    [M] ArrayItem
+
+--- Original
++++ New
+@@ @@
+      */
+     public function createWorkLog(string $issueNo, float $spentInSeconds, DateTime $logDateTime, ?string $description) : object
+     {
+-        return $this->client->post(self::RESOURCE, ['json' => ['issueKey' => $issueNo, 'timeSpentSeconds' => $spentInSeconds, 'startDate' => $logDateTime->format('Y-m-d'), 'startTime' => $logDateTime->format('H:i:s'), 'description' => $description ?? '[NO_DESCRIPTION]', 'authorAccountId' => $this->configuration->getAuthorId()], 'headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
++        return $this->client->post(self::RESOURCE, ['json' => ['issueKey' => $issueNo, 'timeSpentSeconds' => $spentInSeconds, 'startDate' => $logDateTime->format('Y-m-d'), 'startTime' > $logDateTime->format('H:i:s'), 'description' => $description ?? '[NO_DESCRIPTION]', 'authorAccountId' => $this->configuration->getAuthorId()], 'headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
+     }
+     /**
+      * Get Work logs.
+
+
+6) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/Http/WorkLogApi.php:60    [M] Coalesce
+
+--- Original
++++ New
+@@ @@
+      */
+     public function createWorkLog(string $issueNo, float $spentInSeconds, DateTime $logDateTime, ?string $description) : object
+     {
+-        return $this->client->post(self::RESOURCE, ['json' => ['issueKey' => $issueNo, 'timeSpentSeconds' => $spentInSeconds, 'startDate' => $logDateTime->format('Y-m-d'), 'startTime' => $logDateTime->format('H:i:s'), 'description' => $description ?? '[NO_DESCRIPTION]', 'authorAccountId' => $this->configuration->getAuthorId()], 'headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
++        return $this->client->post(self::RESOURCE, ['json' => ['issueKey' => $issueNo, 'timeSpentSeconds' => $spentInSeconds, 'startDate' => $logDateTime->format('Y-m-d'), 'startTime' => $logDateTime->format('H:i:s'), 'description' => '[NO_DESCRIPTION]', 'authorAccountId' => $this->configuration->getAuthorId()], 'headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
+     }
+     /**
+      * Get Work logs.
+
+
+7) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/Http/WorkLogApi.php:61    [M] ArrayItem
+
+--- Original
++++ New
+@@ @@
+      */
+     public function createWorkLog(string $issueNo, float $spentInSeconds, DateTime $logDateTime, ?string $description) : object
+     {
+-        return $this->client->post(self::RESOURCE, ['json' => ['issueKey' => $issueNo, 'timeSpentSeconds' => $spentInSeconds, 'startDate' => $logDateTime->format('Y-m-d'), 'startTime' => $logDateTime->format('H:i:s'), 'description' => $description ?? '[NO_DESCRIPTION]', 'authorAccountId' => $this->configuration->getAuthorId()], 'headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
++        return $this->client->post(self::RESOURCE, ['json' => ['issueKey' => $issueNo, 'timeSpentSeconds' => $spentInSeconds, 'startDate' => $logDateTime->format('Y-m-d'), 'startTime' => $logDateTime->format('H:i:s'), 'description' => $description ?? '[NO_DESCRIPTION]', 'authorAccountId' > $this->configuration->getAuthorId()], 'headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
+     }
+     /**
+      * Get Work logs.
+
+
+8) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/Http/WorkLogApi.php:63    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+      */
+     public function createWorkLog(string $issueNo, float $spentInSeconds, DateTime $logDateTime, ?string $description) : object
+     {
+-        return $this->client->post(self::RESOURCE, ['json' => ['issueKey' => $issueNo, 'timeSpentSeconds' => $spentInSeconds, 'startDate' => $logDateTime->format('Y-m-d'), 'startTime' => $logDateTime->format('H:i:s'), 'description' => $description ?? '[NO_DESCRIPTION]', 'authorAccountId' => $this->configuration->getAuthorId()], 'headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
++        return $this->client->post(self::RESOURCE, ['json' => ['issueKey' => $issueNo, 'timeSpentSeconds' => $spentInSeconds, 'startDate' => $logDateTime->format('Y-m-d'), 'startTime' => $logDateTime->format('H:i:s'), 'description' => $description ?? '[NO_DESCRIPTION]', 'authorAccountId' => $this->configuration->getAuthorId()], 'headers' => []]);
+     }
+     /**
+      * Get Work logs.
+
+
+9) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/Http/WorkLogApi.php:78    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+      */
+     public function getWorkLogs(?array $query = null) : array
+     {
+-        $response = $this->client->get(self::RESOURCE, ['headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
++        $response = $this->client->get(self::RESOURCE, []);
+         return \json_decode($response->getBody()->getContents(), true);
+     }
+ }
+
+
+10) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/Http/WorkLogApi.php:79    [M] ArrayItemRemoval
+
+--- Original
++++ New
+@@ @@
+      */
+     public function getWorkLogs(?array $query = null) : array
+     {
+-        $response = $this->client->get(self::RESOURCE, ['headers' => ['AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()]]);
++        $response = $this->client->get(self::RESOURCE, ['headers' => []]);
+         return \json_decode($response->getBody()->getContents(), true);
+     }
+ }
+
+
+11) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:48    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+      */
+     public function __construct(ConfigurationInterface $configuration, EnvInterface $env, WorkLogsApiInterface $workLogs, ?string $name = null)
+     {
+-        parent::__construct($name);
++        
+         $this->configuration = $configuration;
+         $this->env = $env;
+         $this->workLogs = $workLogs;
+
+
+12) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:62    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+      */
+     protected function configure() : void
+     {
+-        $this->addArgument('issueNo', InputOption::VALUE_REQUIRED, 'Issue / Ticket number. (Eg. OP-1498)');
++        
+         $this->addArgument('timeSpent', InputOption::VALUE_REQUIRED, 'Time spent in hours');
+         $this->addArgument('description', InputOption::VALUE_REQUIRED, 'Ticket description');
+         $this->addOption('datetime', 'dt', InputOption::VALUE_OPTIONAL, 'Time log with format YYYY-MM-DD HH:mm', (new DateTime())->format('Y-m-d H:i'));
+
+
+13) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:68    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     protected function configure() : void
+     {
+         $this->addArgument('issueNo', InputOption::VALUE_REQUIRED, 'Issue / Ticket number. (Eg. OP-1498)');
+-        $this->addArgument('timeSpent', InputOption::VALUE_REQUIRED, 'Time spent in hours');
++        
+         $this->addArgument('description', InputOption::VALUE_REQUIRED, 'Ticket description');
+         $this->addOption('datetime', 'dt', InputOption::VALUE_OPTIONAL, 'Time log with format YYYY-MM-DD HH:mm', (new DateTime())->format('Y-m-d H:i'));
+     }
+
+
+14) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:74    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     {
+         $this->addArgument('issueNo', InputOption::VALUE_REQUIRED, 'Issue / Ticket number. (Eg. OP-1498)');
+         $this->addArgument('timeSpent', InputOption::VALUE_REQUIRED, 'Time spent in hours');
+-        $this->addArgument('description', InputOption::VALUE_REQUIRED, 'Ticket description');
++        
+         $this->addOption('datetime', 'dt', InputOption::VALUE_OPTIONAL, 'Time log with format YYYY-MM-DD HH:mm', (new DateTime())->format('Y-m-d H:i'));
+     }
+     /**
+
+
+15) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:80    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+         $this->addArgument('issueNo', InputOption::VALUE_REQUIRED, 'Issue / Ticket number. (Eg. OP-1498)');
+         $this->addArgument('timeSpent', InputOption::VALUE_REQUIRED, 'Time spent in hours');
+         $this->addArgument('description', InputOption::VALUE_REQUIRED, 'Ticket description');
+-        $this->addOption('datetime', 'dt', InputOption::VALUE_OPTIONAL, 'Time log with format YYYY-MM-DD HH:mm', (new DateTime())->format('Y-m-d H:i'));
++        
+     }
+     /**
+      * Execute work logger.
+
+
+16) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:99    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+      */
+     protected function execute(InputInterface $input, OutputInterface $output) : void
+     {
+-        $this->setupConfiguration($input, $output);
++        
+         $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 60 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
+         $output->write('Work log has been sent.');
+     }
+
+
+17) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:101    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     protected function execute(InputInterface $input, OutputInterface $output) : void
+     {
+         $this->setupConfiguration($input, $output);
+-        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 60 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
++        
+         $output->write('Work log has been sent.');
+     }
+     /**
+
+
+18) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:103    [M] Multiplication
+
+--- Original
++++ New
+@@ @@
+     protected function execute(InputInterface $input, OutputInterface $output) : void
+     {
+         $this->setupConfiguration($input, $output);
+-        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 60 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
++        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 60 / 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
+         $output->write('Work log has been sent.');
+     }
+     /**
+
+
+19) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:103    [M] IncrementInteger
+
+--- Original
++++ New
+@@ @@
+     protected function execute(InputInterface $input, OutputInterface $output) : void
+     {
+         $this->setupConfiguration($input, $output);
+-        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 60 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
++        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 60 * 61, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
+         $output->write('Work log has been sent.');
+     }
+     /**
+
+
+20) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:103    [M] DecrementInteger
+
+--- Original
++++ New
+@@ @@
+     protected function execute(InputInterface $input, OutputInterface $output) : void
+     {
+         $this->setupConfiguration($input, $output);
+-        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 60 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
++        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 60 * 59, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
+         $output->write('Work log has been sent.');
+     }
+     /**
+
+
+21) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:103    [M] Multiplication
+
+--- Original
++++ New
+@@ @@
+     protected function execute(InputInterface $input, OutputInterface $output) : void
+     {
+         $this->setupConfiguration($input, $output);
+-        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 60 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
++        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') / 60 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
+         $output->write('Work log has been sent.');
+     }
+     /**
+
+
+22) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:103    [M] IncrementInteger
+
+--- Original
++++ New
+@@ @@
+     protected function execute(InputInterface $input, OutputInterface $output) : void
+     {
+         $this->setupConfiguration($input, $output);
+-        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 60 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
++        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 61 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
+         $output->write('Work log has been sent.');
+     }
+     /**
+
+
+23) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:103    [M] DecrementInteger
+
+--- Original
++++ New
+@@ @@
+     protected function execute(InputInterface $input, OutputInterface $output) : void
+     {
+         $this->setupConfiguration($input, $output);
+-        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 60 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
++        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 59 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
+         $output->write('Work log has been sent.');
+     }
+     /**
+
+
+24) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:103    [M] CastFloat
+
+--- Original
++++ New
+@@ @@
+     protected function execute(InputInterface $input, OutputInterface $output) : void
+     {
+         $this->setupConfiguration($input, $output);
+-        $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 60 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
++        $this->workLogs->createWorkLog($input->getArgument('issueNo'), $input->getArgument('timeSpent') * 60 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
+         $output->write('Work log has been sent.');
+     }
+     /**
+
+
+25) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:108    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+     {
+         $this->setupConfiguration($input, $output);
+         $this->workLogs->createWorkLog($input->getArgument('issueNo'), (float) $input->getArgument('timeSpent') * 60 * 60, new DateTime($input->getOption('datetime')), $input->getArgument('description'));
+-        $output->write('Work log has been sent.');
++        
+     }
+     /**
+      * Setup credential configurations.
+
+
+26) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:121    [M] TrueValue
+
+--- Original
++++ New
+@@ @@
+      */
+     private function setupConfiguration(InputInterface $input, OutputInterface $output) : void
+     {
+-        if (empty(\getenv('AUTHOR_ID')) === true) {
++        if (empty(\getenv('AUTHOR_ID')) === false) {
+             $helper = $this->getHelper('question');
+             $authorQst = new Question('Set your AUTHOR_ID : ', false);
+             $authorId = $helper->ask($input, $output, $authorQst);
+
+
+27) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:121    [M] Identical
+
+--- Original
++++ New
+@@ @@
+      */
+     private function setupConfiguration(InputInterface $input, OutputInterface $output) : void
+     {
+-        if (empty(\getenv('AUTHOR_ID')) === true) {
++        if (empty(\getenv('AUTHOR_ID')) !== true) {
+             $helper = $this->getHelper('question');
+             $authorQst = new Question('Set your AUTHOR_ID : ', false);
+             $authorId = $helper->ask($input, $output, $authorQst);
+
+
+28) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:124    [M] FalseValue
+
+--- Original
++++ New
+@@ @@
+     {
+         if (empty(\getenv('AUTHOR_ID')) === true) {
+             $helper = $this->getHelper('question');
+-            $authorQst = new Question('Set your AUTHOR_ID : ', false);
++            $authorQst = new Question('Set your AUTHOR_ID : ', true);
+             $authorId = $helper->ask($input, $output, $authorQst);
+             $this->env->set('AUTHOR_ID', $authorId);
+             $this->configuration->setAuthorId($authorId);
+
+
+29) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:128    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             $helper = $this->getHelper('question');
+             $authorQst = new Question('Set your AUTHOR_ID : ', false);
+             $authorId = $helper->ask($input, $output, $authorQst);
+-            $this->env->set('AUTHOR_ID', $authorId);
++            
+             $this->configuration->setAuthorId($authorId);
+         }
+         if (empty(\getenv('API_TOKEN')) === true) {
+
+
+30) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:129    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             $authorQst = new Question('Set your AUTHOR_ID : ', false);
+             $authorId = $helper->ask($input, $output, $authorQst);
+             $this->env->set('AUTHOR_ID', $authorId);
+-            $this->configuration->setAuthorId($authorId);
++            
+         }
+         if (empty(\getenv('API_TOKEN')) === true) {
+             $helper = $this->getHelper('question');
+
+
+31) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:132    [M] TrueValue
+
+--- Original
++++ New
+@@ @@
+             $this->env->set('AUTHOR_ID', $authorId);
+             $this->configuration->setAuthorId($authorId);
+         }
+-        if (empty(\getenv('API_TOKEN')) === true) {
++        if (empty(\getenv('API_TOKEN')) === false) {
+             $helper = $this->getHelper('question');
+             $apiTokenQst = new Question('Set your API_TOKEN : ', false);
+             $token = $helper->ask($input, $output, $apiTokenQst);
+
+
+32) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:132    [M] Identical
+
+--- Original
++++ New
+@@ @@
+             $this->env->set('AUTHOR_ID', $authorId);
+             $this->configuration->setAuthorId($authorId);
+         }
+-        if (empty(\getenv('API_TOKEN')) === true) {
++        if (empty(\getenv('API_TOKEN')) !== true) {
+             $helper = $this->getHelper('question');
+             $apiTokenQst = new Question('Set your API_TOKEN : ', false);
+             $token = $helper->ask($input, $output, $apiTokenQst);
+
+
+33) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:135    [M] FalseValue
+
+--- Original
++++ New
+@@ @@
+         }
+         if (empty(\getenv('API_TOKEN')) === true) {
+             $helper = $this->getHelper('question');
+-            $apiTokenQst = new Question('Set your API_TOKEN : ', false);
++            $apiTokenQst = new Question('Set your API_TOKEN : ', true);
+             $token = $helper->ask($input, $output, $apiTokenQst);
+             $this->env->set('API_TOKEN', $token);
+             $this->configuration->setToken($token);
+
+
+34) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:139    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             $helper = $this->getHelper('question');
+             $apiTokenQst = new Question('Set your API_TOKEN : ', false);
+             $token = $helper->ask($input, $output, $apiTokenQst);
+-            $this->env->set('API_TOKEN', $token);
++            
+             $this->configuration->setToken($token);
+         }
+     }
+ }
+
+35) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Commands/WorkLogCommand.php:140    [M] MethodCallRemoval
+
+--- Original
++++ New
+@@ @@
+             $apiTokenQst = new Question('Set your API_TOKEN : ', false);
+             $token = $helper->ask($input, $output, $apiTokenQst);
+             $this->env->set('API_TOKEN', $token);
+-            $this->configuration->setToken($token);
++            
+         }
+     }
+ }
+
+
+36) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Services/EnvConfiguration.php:38    [M] Assignment
+
+--- Original
++++ New
+@@ @@
+     {
+         $envPath = $this->envPath;
+         $contents = \file_get_contents($envPath);
+-        $contents .= "\n{$key}={$value}";
++        $contents = "\n{$key}={$value}";
+         if (empty(\getenv($key)) === false) {
+             $oldConfiguration = $key . '=' . \getenv($key);
+             $contents = \str_replace($oldConfiguration, '', $contents);
+
+
+37) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Services/EnvConfiguration.php:40    [M] FalseValue
+
+--- Original
++++ New
+@@ @@
+         $envPath = $this->envPath;
+         $contents = \file_get_contents($envPath);
+         $contents .= "\n{$key}={$value}";
+-        if (empty(\getenv($key)) === false) {
++        if (empty(\getenv($key)) === true) {
+             $oldConfiguration = $key . '=' . \getenv($key);
+             $contents = \str_replace($oldConfiguration, '', $contents);
+         }
+
+
+38) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Services/EnvConfiguration.php:40    [M] Identical
+
+--- Original
++++ New
+@@ @@
+         $envPath = $this->envPath;
+         $contents = \file_get_contents($envPath);
+         $contents .= "\n{$key}={$value}";
+-        if (empty(\getenv($key)) === false) {
++        if (empty(\getenv($key)) !== false) {
+             $oldConfiguration = $key . '=' . \getenv($key);
+             $contents = \str_replace($oldConfiguration, '', $contents);
+         }
+
+
+39) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Services/EnvConfiguration.php:47    [M] FunctionCallRemoval
+
+--- Original
++++ New
+@@ @@
+             $contents = \str_replace($oldConfiguration, '', $contents);
+         }
+         $file = fopen($envPath, 'w');
+-        fwrite($file, preg_replace("/(^[\r\n]*|[\r\n]+)[\\s\t]*[\r\n]+/", "\n", $contents));
++        
+         fclose($file);
+     }
+ }
+
+
+40) /Users/alabarentojr/Developer/Projects/Packages/jira-worklogs/src/WorkLogs/Services/EnvConfiguration.php:48    [M] FunctionCallRemoval
+
+--- Original
++++ New
+@@ @@
+         }
+         $file = fopen($envPath, 'w');
+         fwrite($file, preg_replace("/(^[\r\n]*|[\r\n]+)[\\s\t]*[\r\n]+/", "\n", $contents));
+-        fclose($file);
++        
+     }
+ }
