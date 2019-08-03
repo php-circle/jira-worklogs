@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace PhpCircle\WorkLogs\Commands;
 
+use DateTime;
+use PhpCircle\Http\Interfaces\WorkLogsApiInterface;
 use PhpCircle\Worklogs\Interfaces\ConfigurationInterface;
 use PhpCircle\WorkLogs\Interfaces\EnvInterface;
 use Symfony\Component\Console\Command\Command;
@@ -24,15 +26,22 @@ final class WorkLogCommand extends Command
     private $env;
 
     /**
+     * @var \PhpCircle\Http\Interfaces\WorkLogsApiInterface
+     */
+    private $workLogs;
+
+    /**
      * WorkLogCommand constructor.
      *
      * @param \PhpCircle\Worklogs\Interfaces\ConfigurationInterface $configuration
      * @param \PhpCircle\WorkLogs\Interfaces\EnvInterface $env
+     * @param \PhpCircle\Http\Interfaces\WorkLogsApiInterface $workLogs
      * @param null|string $name
      */
     public function __construct(
         ConfigurationInterface $configuration,
         EnvInterface $env,
+        WorkLogsApiInterface $workLogs,
         ?string $name = null
     )
     {
@@ -40,6 +49,7 @@ final class WorkLogCommand extends Command
 
         $this->configuration = $configuration;
         $this->env = $env;
+        $this->workLogs = $workLogs;
     }
 
     /**
@@ -55,11 +65,16 @@ final class WorkLogCommand extends Command
             'Issue / Ticket number. (Eg. OP-1498)'
         );
 
-        $this->addOption(
+        $this->addArgument(
             'timeSpent',
-            'ts',
             InputOption::VALUE_REQUIRED,
-            'Time spent in minutes'
+            'Time spent in hours'
+        );
+
+        $this->addArgument(
+            'description',
+            InputOption::VALUE_REQUIRED,
+            'Ticket description'
         );
 
         $this->addOption(
@@ -67,7 +82,7 @@ final class WorkLogCommand extends Command
             'dt',
             InputOption::VALUE_OPTIONAL,
             'Time log with format YYYY-MM-DD HH:mm',
-            (new \DateTime())->format('Y-m-d H:i')
+            (new DateTime())->format('Y-m-d H:i')
         );
     }
 
@@ -83,7 +98,14 @@ final class WorkLogCommand extends Command
     {
         $this->setupConfiguration($input, $output);
 
+        $this->workLogs->createWorkLog(
+            $input->getArgument('issueNo'),
+            ((float)$input->getArgument('timeSpent') * 60) * 60,
+            new DateTime($input->getOption('datetime')),
+            $input->getArgument('description')
+        );
 
+        $output->write('Work log has been sent.');
     }
 
     /**

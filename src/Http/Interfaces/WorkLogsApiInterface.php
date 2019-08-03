@@ -10,18 +10,16 @@ interface WorkLogsApiInterface
     /**
      * Create Work log.
      *
-     * @param string $accountId
      * @param string $issueNo
-     * @param int $spentInSeconds
+     * @param float $spentInSeconds
      * @param \DateTime $logDateTime
      * @param null|string $description
      *
      * @return object
      */
     public function createWorkLog(
-        string $accountId,
         string $issueNo,
-        int $spentInSeconds,
+        float $spentInSeconds,
         DateTime $logDateTime,
         ?string $description
     ): object;

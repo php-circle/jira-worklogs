@@ -6,56 +6,48 @@ namespace PhpCircle\Http;
 use DateTime;
 use GuzzleHttp\Client;
 use PhpCircle\Http\Interfaces\WorkLogsApiInterface;
+use PhpCircle\Worklogs\Interfaces\ConfigurationInterface;
 
 final class WorkLogApi implements WorkLogsApiInterface
 {
     /** @var string */
-    private const URI = 'https://api.tempo.io/core/3';
+    private const URI = 'https://api.tempo.io';
 
     /** @var string  */
-    private const RESOURCE = 'worklogs';
-
-    /**
-     * @var string
-     */
-    private $apiToken;
-
-    /**
-     * @var string
-     */
-    private $authorId;
+    private const RESOURCE = 'core/3/worklogs';
 
     /** @var \GuzzleHttp\Client */
     private $client;
 
     /**
+     * @var \PhpCircle\Worklogs\Interfaces\ConfigurationInterface $configuration
+     */
+    private $configuration;
+
+    /**
      * WorkLogApi constructor.
      *
-     * @param string $authorId
-     * @param string $apiToken
+     * @param \PhpCircle\Worklogs\Interfaces\ConfigurationInterface $configuration
      */
-    public function __construct(string $authorId, string $apiToken)
+    public function __construct(ConfigurationInterface $configuration)
     {
         $this->client = new Client(['base_uri' => self::URI]);
-        $this->authorId = $authorId;
-        $this->apiToken = $apiToken;
+        $this->configuration = $configuration;
     }
 
     /**
      * Create Work log.
      *
-     * @param string $accountId
      * @param string $issueNo
-     * @param int $spentInSeconds
+     * @param float $spentInSeconds
      * @param \DateTime $logDateTime
      * @param null|string $description
      *
      * @return object
      */
     public function createWorkLog(
-        string $accountId,
         string $issueNo,
-        int $spentInSeconds,
+        float $spentInSeconds,
         DateTime $logDateTime,
         ?string $description
     ): object {
@@ -66,10 +58,10 @@ final class WorkLogApi implements WorkLogsApiInterface
                 'startDate' => $logDateTime->format('Y-m-d'),
                 'startTime' => $logDateTime->format('H:i:s'),
                 'description' => $description ?? '[NO_DESCRIPTION]',
-                'authorAccountId' => $this->authorId
+                'authorAccountId' => $this->configuration->getAuthorId()
             ],
             'headers' => [
-                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->apiToken
+                'AUTHORIZATION' => 'Bearer '. $this->configuration->getToken()
             ]
         ]);
     }
@@ -85,7 +77,7 @@ final class WorkLogApi implements WorkLogsApiInterface
     {
         $response = $this->client->get(self::RESOURCE, [
             'headers' => [
-                'HTTP_AUTHORIZATION' => 'Bearer ' . $this->apiToken
+                'AUTHORIZATION' => 'Bearer '. $this->configuration->getToken()
             ]
         ]);
 

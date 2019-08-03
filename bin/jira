@@ -4,6 +4,8 @@
 require __DIR__ . '/../bootstrap/autoload.php';
 
 use Illuminate\Container\Container;
+use PhpCircle\Http\Interfaces\WorkLogsApiInterface;
+use PhpCircle\Http\WorkLogApi;
 use PhpCircle\WorkLogs\Commands\WorkLogCommand;
 use PhpCircle\WorkLogs\Configuration;
 use PhpCircle\Worklogs\Interfaces\ConfigurationInterface;
@@ -39,6 +41,7 @@ $container->bind(ConfigurationInterface::class, function(): ConfigurationInterfa
             \getenv('API_TOKEN')
     );
 });
+$container->bind(WorkLogsApiInterface::class, WorkLogApi::class);
 
 
 /** Console Commands Registry */

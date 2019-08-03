@@ -1,5 +1,5 @@
 {
-  "name": "phpcircle/jira-worklogs",
+  "name": "php-circle/jira-worklogs",
   "type" : "tool",
   "description": "Work logger tool for jira",
   "keywords": ["jira", "worklogs"],
