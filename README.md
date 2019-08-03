@@ -1,7 +1,7 @@
 # jira-worklogs
 
 ## Installation
-`composer require php-circle/jira-worklogs`
+`composer global require php-circle/jira-worklogs`
 
 ## Usage
 
