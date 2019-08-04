@@ -5,6 +5,7 @@ namespace PhpCircle\WorkLogs\Commands;
 
 use DateTime;
 use PhpCircle\Http\Interfaces\WorkLogsApiInterface;
+use PhpCircle\WorkLogs\Exception\MissingArgumentException;
 use PhpCircle\Worklogs\Interfaces\ConfigurationInterface;
 use PhpCircle\WorkLogs\Interfaces\EnvInterface;
 use Symfony\Component\Console\Command\Command;
@@ -43,8 +44,7 @@ final class WorkLogCommand extends Command
         EnvInterface $env,
         WorkLogsApiInterface $workLogs,
         ?string $name = null
-    )
-    {
+    ) {
         parent::__construct($name);
 
         $this->configuration = $configuration;
@@ -93,10 +93,18 @@ final class WorkLogCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
+     *
+     * @throws \PhpCircle\WorkLogs\Exception\MissingArgumentException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->setupConfiguration($input, $output);
+
+        [$issueNo, $timeSpent] = [$input->getArgument('issueNo'), $input->getArgument('timeSpent')];
+
+        if ($issueNo === null || $timeSpent === null) {
+            throw new MissingArgumentException('Missing issueNo or timeSpent. Call for --help!');
+        }
 
         $this->workLogs->createWorkLog(
             $input->getArgument('issueNo'),
@@ -118,7 +126,7 @@ final class WorkLogCommand extends Command
      */
     private function setupConfiguration(InputInterface $input, OutputInterface $output): void
     {
-        if(empty(\getenv('AUTHOR_ID')) === true){
+        if (empty(\getenv('AUTHOR_ID')) === true) {
             $helper = $this->getHelper('question');
 
             $authorQst = new Question('Set your AUTHOR_ID : ', false);
@@ -129,7 +137,7 @@ final class WorkLogCommand extends Command
             $this->configuration->setAuthorId($authorId);
         }
 
-        if(empty(\getenv('API_TOKEN')) === true){
+        if (empty(\getenv('API_TOKEN')) === true) {
             $helper = $this->getHelper('question');
 
             $apiTokenQst = new Question('Set your API_TOKEN : ', false);
