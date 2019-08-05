@@ -4,13 +4,13 @@
 require __DIR__ . '/../bootstrap/autoload.php';
 
 use Illuminate\Container\Container;
-use PhpCircle\Http\Interfaces\WorkLogsApiInterface;
-use PhpCircle\Http\WorkLogApi;
-use PhpCircle\WorkLogs\Commands\WorkLogCommand;
-use PhpCircle\WorkLogs\Configuration;
-use PhpCircle\Worklogs\Interfaces\ConfigurationInterface;
-use PhpCircle\WorkLogs\Interfaces\EnvInterface;
-use PhpCircle\WorkLogs\Services\EnvConfiguration;
+use PhpCircle\Jira\Worklogs\Commands\WorkLogCommand;
+use PhpCircle\Jira\Worklogs\Configuration;
+use PhpCircle\Jira\Worklogs\EnvConfiguration;
+use PhpCircle\Jira\Worklogs\Http\Interfaces\WorkLogsApiInterface;
+use PhpCircle\Jira\Worklogs\Http\WorkLogApi;
+use PhpCircle\Jira\Worklogs\Interfaces\ConfigurationInterface;
+use PhpCircle\Jira\Worklogs\Interfaces\EnvInterface;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Dotenv\Dotenv;
 

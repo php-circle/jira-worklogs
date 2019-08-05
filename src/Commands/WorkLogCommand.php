@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace PhpCircle\WorkLogs\Commands;
+namespace PhpCircle\Jira\Worklogs\Commands;
 
 use DateTime;
-use PhpCircle\Http\Interfaces\WorkLogsApiInterface;
-use PhpCircle\WorkLogs\Exception\MissingArgumentException;
-use PhpCircle\Worklogs\Interfaces\ConfigurationInterface;
-use PhpCircle\WorkLogs\Interfaces\EnvInterface;
+use PhpCircle\Jira\Worklogs\Exceptions\MissingArgumentException;
+use PhpCircle\Jira\Worklogs\Http\Interfaces\WorkLogsApiInterface;
+use PhpCircle\Jira\Worklogs\Interfaces\ConfigurationInterface;
+use PhpCircle\Jira\Worklogs\Interfaces\EnvInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -16,27 +16,21 @@ use Symfony\Component\Console\Question\Question;
 
 final class WorkLogCommand extends Command
 {
-    /**
-     * @var \PhpCircle\Worklogs\Interfaces\ConfigurationInterface
-     */
+    /** @var \PhpCircle\Jira\Worklogs\Interfaces\ConfigurationInterface  */
     private $configuration;
 
-    /**
-     * @var \PhpCircle\WorkLogs\Interfaces\EnvInterface
-     */
+    /** @var \PhpCircle\Jira\Worklogs\Interfaces\EnvInterface  */
     private $env;
 
-    /**
-     * @var \PhpCircle\Http\Interfaces\WorkLogsApiInterface
-     */
+    /** @var \PhpCircle\Jira\Worklogs\Http\Interfaces\WorkLogsApiInterface  */
     private $workLogs;
 
     /**
      * WorkLogCommand constructor.
      *
-     * @param \PhpCircle\Worklogs\Interfaces\ConfigurationInterface $configuration
-     * @param \PhpCircle\WorkLogs\Interfaces\EnvInterface $env
-     * @param \PhpCircle\Http\Interfaces\WorkLogsApiInterface $workLogs
+     * @param \PhpCircle\Jira\Worklogs\Interfaces\ConfigurationInterface $configuration
+     * @param \PhpCircle\Jira\Worklogs\Interfaces\EnvInterface $env
+     * @param \PhpCircle\Jira\Worklogs\Http\Interfaces\WorkLogsApiInterface $workLogs
      * @param null|string $name
      */
     public function __construct(
@@ -94,7 +88,7 @@ final class WorkLogCommand extends Command
      *
      * @return void
      *
-     * @throws \PhpCircle\WorkLogs\Exception\MissingArgumentException
+     * @throws \PhpCircle\Jira\Worklogs\Exceptions\MissingArgumentException
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {

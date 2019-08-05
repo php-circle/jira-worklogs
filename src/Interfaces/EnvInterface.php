@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PhpCircle\WorkLogs\Interfaces;
+namespace PhpCircle\Jira\Worklogs\Interfaces;
 
 interface EnvInterface
 {

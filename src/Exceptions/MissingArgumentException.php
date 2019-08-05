@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PhpCircle\WorkLogs\Exception;
+namespace PhpCircle\Jira\Worklogs\Exceptions;
 
 final class MissingArgumentException extends AbstractException
 {

@@ -19,7 +19,7 @@
   },
   "autoload": {
     "psr-4": {
-      "PhpCircle\\": "src/"
+      "PhpCircle\\Jira\\Worklogs\\": "src/"
     }
   },
   "autoload-dev": {

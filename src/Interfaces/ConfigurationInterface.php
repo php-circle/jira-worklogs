@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PhpCircle\Worklogs\Interfaces;
+namespace PhpCircle\Jira\Worklogs\Interfaces;
 
 interface ConfigurationInterface
 {
@@ -24,7 +24,7 @@ interface ConfigurationInterface
      *
      * @param string $authorId
      *
-     * @return \PhpCircle\Worklogs\Interfaces\ConfigurationInterface
+     * @return \PhpCircle\Jira\Worklogs\Interfaces\ConfigurationInterface
      */
     public function setAuthorId(string $authorId): ConfigurationInterface;
 
@@ -33,7 +33,7 @@ interface ConfigurationInterface
      *
      * @param string $token
      *
-     * @return \PhpCircle\Worklogs\Interfaces\ConfigurationInterface
+     * @return \PhpCircle\Jira\Worklogs\Interfaces\ConfigurationInterface
      */
     public function setToken(string $token): ConfigurationInterface;
 }

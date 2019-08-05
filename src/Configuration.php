@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace PhpCircle\WorkLogs;
+namespace PhpCircle\Jira\Worklogs;
 
-use PhpCircle\Worklogs\Interfaces\ConfigurationInterface;
+use PhpCircle\Jira\Worklogs\Interfaces\ConfigurationInterface;
 
 final class Configuration implements ConfigurationInterface
 {
@@ -56,7 +56,7 @@ final class Configuration implements ConfigurationInterface
      *
      * @param string $authorId
      *
-     * @return \PhpCircle\Worklogs\Interfaces\ConfigurationInterface
+     * @return \PhpCircle\Jira\Worklogs\Interfaces\ConfigurationInterface
      */
     public function setAuthorId(string $authorId): ConfigurationInterface
     {
@@ -70,7 +70,7 @@ final class Configuration implements ConfigurationInterface
      *
      * @param string $token
      *
-     * @return \PhpCircle\Worklogs\Interfaces\ConfigurationInterface
+     * @return \PhpCircle\Jira\Worklogs\Interfaces\ConfigurationInterface
      */
     public function setToken(string $token): ConfigurationInterface
     {

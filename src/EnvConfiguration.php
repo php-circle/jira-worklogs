@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace PhpCircle\WorkLogs\Services;
+namespace PhpCircle\Jira\Worklogs;
 
-use PhpCircle\WorkLogs\Interfaces\EnvInterface;
+use PhpCircle\Jira\Worklogs\Interfaces\EnvInterface;
 
 final class EnvConfiguration implements EnvInterface
 {
@@ -42,9 +42,9 @@ final class EnvConfiguration implements EnvInterface
             $contents = \str_replace($oldConfiguration, '', $contents);
         }
 
-        $file = fopen($envPath, 'w');
+        $file = \fopen($envPath, 'w');
 
-        fwrite($file, preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $contents));
-        fclose($file);
+        \fwrite($file, \preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $contents));
+        \fclose($file);
     }
 }

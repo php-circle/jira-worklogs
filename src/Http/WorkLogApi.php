@@ -1,33 +1,30 @@
 <?php
 declare(strict_types=1);
 
-namespace PhpCircle\Http;
+namespace PhpCircle\Jira\Worklogs\Http;
 
 use DateTime;
 use GuzzleHttp\Client;
-use PhpCircle\Http\Interfaces\WorkLogsApiInterface;
-use PhpCircle\Worklogs\Interfaces\ConfigurationInterface;
+use PhpCircle\Jira\Worklogs\Http\Interfaces\WorkLogsApiInterface;
+use PhpCircle\Jira\Worklogs\Interfaces\ConfigurationInterface;
 
 final class WorkLogApi implements WorkLogsApiInterface
 {
     /** @var string */
-    private const URI = 'https://api.tempo.io';
-
-    /** @var string  */
     private const RESOURCE = 'core/3/worklogs';
+
+    /** @var string */
+    private const URI = 'https://api.tempo.io';
 
     /** @var \GuzzleHttp\Client */
     private $client;
 
-    /**
-     * @var \PhpCircle\Worklogs\Interfaces\ConfigurationInterface $configuration
-     */
     private $configuration;
 
     /**
      * WorkLogApi constructor.
      *
-     * @param \PhpCircle\Worklogs\Interfaces\ConfigurationInterface $configuration
+     * @param \PhpCircle\Jira\Worklogs\Interfaces\ConfigurationInterface $configuration
      */
     public function __construct(ConfigurationInterface $configuration)
     {
@@ -61,7 +58,7 @@ final class WorkLogApi implements WorkLogsApiInterface
                 'authorAccountId' => $this->configuration->getAuthorId()
             ],
             'headers' => [
-                'AUTHORIZATION' => 'Bearer '. $this->configuration->getToken()
+                'AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()
             ]
         ]);
     }
@@ -77,7 +74,7 @@ final class WorkLogApi implements WorkLogsApiInterface
     {
         $response = $this->client->get(self::RESOURCE, [
             'headers' => [
-                'AUTHORIZATION' => 'Bearer '. $this->configuration->getToken()
+                'AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()
             ]
         ]);
 

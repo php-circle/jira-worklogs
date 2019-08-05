@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace PhpCircle\Http\Interfaces;
+namespace PhpCircle\Jira\Worklogs\Http\Interfaces;
 
 use DateTime;
 
