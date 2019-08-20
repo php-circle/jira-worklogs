@@ -66,17 +66,46 @@ final class WorkLogApi implements WorkLogsApiInterface
     /**
      * Get Work logs.
      *
-     * @param mixed[]|null $query
+     * @param null|string $issues
+     * @param null|\DateTime $from
+     * @param null|\DateTime $to
      *
-     * @return mixed[]
+     * @return mixed[
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getWorkLogs(?array $query = null): array
-    {
-        $response = $this->client->get(self::RESOURCE, [
-            'headers' => [
-                'AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()
+    public function getWorkLogs(
+        ?string $issues = null,
+        ?DateTime $from = null,
+        ?DateTime $to = null
+    ): array {
+        $urlParameters = [
+            'from' => $from !== null ? $from->format('Y-m-d') : (new DateTime('today'))->format('Y-m-d'),
+            'to' => $to !== null ? $to->format('Y-m-d') : (new DateTime('today'))->format('Y-m-d')
+        ];
+
+        $uri = \sprintf(
+            '%s/%s?%s',
+            self::URI,
+            self::RESOURCE,
+            \http_build_query($urlParameters)
+        );
+
+        $issuesList = \explode(',', $issues) ?? [];
+
+        if (empty($issuesList) === false) {
+            $uri .= '&issue=' . \implode('&issue=', $issuesList);
+        }
+
+        $response = $this->client->request(
+            'GET',
+            $uri,
+            [
+                'headers' => [
+                    'AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()
+                ]
             ]
-        ]);
+        );
 
         return \json_decode($response->getBody()->getContents(), true);
     }
