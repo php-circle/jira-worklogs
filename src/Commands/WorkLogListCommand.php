@@ -55,9 +55,9 @@ final class WorkLogListCommand extends Command
     protected function configure(): void
     {
         $this->addArgument(
-            'issueNo',
+            'issues',
             InputOption::VALUE_REQUIRED,
-            'Issue / Ticket number. (Eg. OP-1498)'
+            'Issues / Ticket numbers comma separated. (Eg. OP-1498,ONLINE-515)'
         );
 
         $this->addOption(
@@ -82,23 +82,23 @@ final class WorkLogListCommand extends Command
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
-     *
-     * @throws \PhpCircle\Jira\Worklogs\Exceptions\MissingArgumentException
+     * @throws \Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $this->setupConfiguration($input, $output);
 
-        $issue = $input->getArgument('issueNo');
+        $issues = $input->getArgument('issues') !== null ? \explode(',', $input->getArgument('issues')) : [];
         $dateFrom = $input->getOption('from');
         $dateTo = $input->getOption('to');
 
-        if ($issue === null) {
-            throw new MissingArgumentException('Missing issueNo. Call for --help!');
-        }
+        // make sure to trim.
+        $issues = \array_map(static function(string $issue): string {
+            return \trim($issue);
+        }, $issues);
 
         $response = $this->workLogs->getWorkLogs(
-            $issue,
+            $issues,
             $dateFrom ? new DateTime($input->getOption('from')) : null,
             $dateTo ? new DateTime($input->getOption('to')) : null
         );
