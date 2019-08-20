@@ -27,14 +27,14 @@ interface WorkLogsApiInterface
     /**
      * Get Work logs.
      *
-     * @param string $issue
+     * @param null|string[] $issues
      * @param null|\DateTime $from
      * @param null|\DateTime $to
      *
      * @return mixed[]
      */
     public function getWorkLogs(
-        string $issue,
+        ?array $issues,
         ?DateTime $from = null,
         ?DateTime $to = null
     ): array;

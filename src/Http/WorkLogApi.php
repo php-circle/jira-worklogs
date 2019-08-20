@@ -66,37 +66,35 @@ final class WorkLogApi implements WorkLogsApiInterface
     /**
      * Get Work logs.
      *
-     * @param string $issue
+     * @param null|string[] $issues
      * @param null|\DateTime $from
      * @param null|\DateTime $to
      *
-     * @return mixed[]
+     * @return mixed[
+     *
+     * @throws \Exception
      */
     public function getWorkLogs(
-        string $issue,
+        ?array $issues,
         ?DateTime $from = null,
         ?DateTime $to = null
-    ): array
-    {
+    ): array {
         $payload = [
             'headers' => [
                 'AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()
+            ],
+            'query' => [
+                'issue' => $issues ?? [],
+                'from' => $from !== null ? $from->format('Y-m-d') : (new DateTime('today'))->format('Y-m-d'),
+                'to' => $to !== null ? $to->format('Y-m-d') : (new DateTime('today'))->format('Y-m-d')
             ]
         ];
 
-        if ($from !== null) {
-            $payload['query']['from'] = $from->format('Y-m-d');
-        }
-
-        if ($to !== null) {
-            $payload['query']['to'] = $to->format('Y-m-d');
-        }
-
         $response = $this->client->get(
-            \sprintf('%s/issue/%s', self::RESOURCE, $issue),
+            self::RESOURCE,
             $payload
         );
-        
+
         return \json_decode($response->getBody()->getContents(), true);
     }
 }
