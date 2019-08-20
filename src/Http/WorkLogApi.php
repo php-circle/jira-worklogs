@@ -91,10 +91,8 @@ final class WorkLogApi implements WorkLogsApiInterface
             \http_build_query($urlParameters)
         );
 
-        $issuesList = \explode(',', $issues) ?? [];
-
-        if (empty($issuesList) === false) {
-            $uri .= '&issue=' . \implode('&issue=', $issuesList);
+        if ($issues !== null) {
+            $uri .= '&issue=' . \implode('&issue=', \explode(',', $issues) ?? []);
         }
 
         $response = $this->client->request(
@@ -106,6 +104,7 @@ final class WorkLogApi implements WorkLogsApiInterface
                 ]
             ]
         );
+
 
         return \json_decode($response->getBody()->getContents(), true);
     }
