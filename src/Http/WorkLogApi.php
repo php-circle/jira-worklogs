@@ -66,33 +66,45 @@ final class WorkLogApi implements WorkLogsApiInterface
     /**
      * Get Work logs.
      *
-     * @param null|string[] $issues
+     * @param null|string $issues
      * @param null|\DateTime $from
      * @param null|\DateTime $to
      *
      * @return mixed[
      *
-     * @throws \Exception
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function getWorkLogs(
-        ?array $issues,
+        ?string $issues = null,
         ?DateTime $from = null,
         ?DateTime $to = null
     ): array {
-        $payload = [
-            'headers' => [
-                'AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()
-            ],
-            'query' => [
-                'issue' => $issues ?? [],
-                'from' => $from !== null ? $from->format('Y-m-d') : (new DateTime('today'))->format('Y-m-d'),
-                'to' => $to !== null ? $to->format('Y-m-d') : (new DateTime('today'))->format('Y-m-d')
-            ]
+        $urlParameters = [
+            'from' => $from !== null ? $from->format('Y-m-d') : (new DateTime('today'))->format('Y-m-d'),
+            'to' => $to !== null ? $to->format('Y-m-d') : (new DateTime('today'))->format('Y-m-d')
         ];
 
-        $response = $this->client->get(
+        $uri = \sprintf(
+            '%s/%s?%s',
+            self::URI,
             self::RESOURCE,
-            $payload
+            \http_build_query($urlParameters)
+        );
+
+        $issuesList = \explode(',', $issues) ?? [];
+
+        if (empty($issuesList) === false) {
+            $uri .= '&issue=' . \implode('&issue=', $issuesList);
+        }
+
+        $response = $this->client->request(
+            'GET',
+            $uri,
+            [
+                'headers' => [
+                    'AUTHORIZATION' => 'Bearer ' . $this->configuration->getToken()
+                ]
+            ]
         );
 
         return \json_decode($response->getBody()->getContents(), true);

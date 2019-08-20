@@ -88,17 +88,11 @@ final class WorkLogListCommand extends Command
     {
         $this->setupConfiguration($input, $output);
 
-        $issues = $input->getArgument('issues') !== null ? \explode(',', $input->getArgument('issues')) : [];
         $dateFrom = $input->getOption('from');
         $dateTo = $input->getOption('to');
 
-        // make sure to trim.
-        $issues = \array_map(static function(string $issue): string {
-            return \trim($issue);
-        }, $issues);
-
         $response = $this->workLogs->getWorkLogs(
-            $issues,
+            $input->getArgument('issues'),
             $dateFrom ? new DateTime($input->getOption('from')) : null,
             $dateTo ? new DateTime($input->getOption('to')) : null
         );
