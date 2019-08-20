@@ -9,12 +9,13 @@ use PhpCircle\Jira\Worklogs\Http\Interfaces\WorkLogsApiInterface;
 use PhpCircle\Jira\Worklogs\Interfaces\ConfigurationInterface;
 use PhpCircle\Jira\Worklogs\Interfaces\EnvInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\Question;
 
-final class WorkLogCommand extends Command
+final class WorkLogListCommand extends Command
 {
     /** @var \PhpCircle\Jira\Worklogs\Interfaces\ConfigurationInterface  */
     private $configuration;
@@ -59,24 +60,18 @@ final class WorkLogCommand extends Command
             'Issue / Ticket number. (Eg. OP-1498)'
         );
 
-        $this->addArgument(
-            'timeSpent',
-            InputOption::VALUE_REQUIRED,
-            'Time spent in hours'
-        );
-
-        $this->addArgument(
-            'description',
-            InputOption::VALUE_REQUIRED,
-            'Ticket description'
+        $this->addOption(
+            'from',
+            'df',
+            InputOption::VALUE_OPTIONAL,
+            'Get work logs from date YYYY-MM-DD'
         );
 
         $this->addOption(
-            'datetime',
+            'to',
             'dt',
             InputOption::VALUE_OPTIONAL,
-            'Time log with format YYYY-MM-DD HH:mm',
-            (new DateTime())->format('Y-m-d H:i')
+            'Get work logs to date YYYY-MM-DD'
         );
     }
 
@@ -94,20 +89,35 @@ final class WorkLogCommand extends Command
     {
         $this->setupConfiguration($input, $output);
 
-        [$issueNo, $timeSpent] = [$input->getArgument('issueNo'), $input->getArgument('timeSpent')];
+        $issue = $input->getArgument('issueNo');
+        $dateFrom = $input->getOption('from');
+        $dateTo = $input->getOption('to');
 
-        if ($issueNo === null || $timeSpent === null) {
-            throw new MissingArgumentException('Missing issueNo or timeSpent. Call for --help!');
+        if ($issue === null) {
+            throw new MissingArgumentException('Missing issueNo. Call for --help!');
         }
 
-        $this->workLogs-> createWorkLog(
-            $input->getArgument('issueNo'),
-            ((float)$input->getArgument('timeSpent') * 60) * 60,
-            new DateTime($input->getOption('datetime')),
-            $input->getArgument('description')
+        $response = $this->workLogs->getWorkLogs(
+            $issue,
+            $dateFrom ? new DateTime($input->getOption('from')) : null,
+            $dateTo ? new DateTime($input->getOption('to')) : null
         );
 
-        $output->write('Work log has been sent.');
+        $table = new Table($output);
+
+        $logs = [];
+
+        foreach ($response['results'] as $log) {
+            $logs[] = [
+                $log['issue']['key'],
+                \sprintf('%s %s', $log['startDate'], $log['startTime']),
+                \sprintf('%s H', (int)$log['timeSpentSeconds'] / 60 / 60),
+                $log['createdAt']
+            ];
+        }
+
+        $table->setHeaders(['Ticket No.', 'Date Start', 'Total Time Spent', 'Date Logged'])->setRows($logs);
+        $table->render();
     }
 
     /**

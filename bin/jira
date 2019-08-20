@@ -5,6 +5,7 @@ require __DIR__ . '/../bootstrap/autoload.php';
 
 use Illuminate\Container\Container;
 use PhpCircle\Jira\Worklogs\Commands\WorkLogCommand;
+use PhpCircle\Jira\Worklogs\Commands\WorkLogListCommand;
 use PhpCircle\Jira\Worklogs\Configuration;
 use PhpCircle\Jira\Worklogs\EnvConfiguration;
 use PhpCircle\Jira\Worklogs\Http\Interfaces\WorkLogsApiInterface;
@@ -46,5 +47,6 @@ $container->bind(WorkLogsApiInterface::class, WorkLogApi::class);
 
 /** Console Commands Registry */
 $application->add($container->make(WorkLogCommand::class, ['name' => 'worklog']));
+$application->add($container->make(WorkLogListCommand::class, ['name' => 'workloglist']));
 
 $application->run();
