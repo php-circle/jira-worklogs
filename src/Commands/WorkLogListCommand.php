@@ -101,17 +101,25 @@ final class WorkLogListCommand extends Command
 
         $logs = [];
 
+        $totalHours = 0.00;
+
         foreach ($response['results'] as $log) {
+            $hours = (float)$log['timeSpentSeconds'] / 60 / 60;
+
             $logs[] = [
                 $log['issue']['key'],
                 \sprintf('%s %s', $log['startDate'], $log['startTime']),
-                \sprintf('%s H', (int)$log['timeSpentSeconds'] / 60 / 60),
+                \sprintf('%s H', $hours),
                 $log['createdAt']
             ];
+
+            $totalHours += $hours;
         }
 
-        $table->setHeaders(['Ticket No.', 'Date Start', 'Total Time Spent', 'Date Logged'])->setRows($logs);
-        $table->render();
+        $table->setHeaders(['Ticket No.', 'Date Start', 'Total Time Spent', 'Date Logged'])
+            ->setRows($logs)
+            ->setFooterTitle(\sprintf('Total Hours: %sH', $totalHours))
+            ->render();
     }
 
     /**
