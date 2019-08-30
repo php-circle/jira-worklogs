@@ -108,6 +108,7 @@ final class WorkLogListCommand extends Command
 
             $logs[] = [
                 $log['issue']['key'],
+                \trim($log['description']),
                 \sprintf('%s %s', $log['startDate'], $log['startTime']),
                 \sprintf('%s H', $hours),
                 $log['createdAt']
@@ -116,7 +117,7 @@ final class WorkLogListCommand extends Command
             $totalHours += $hours;
         }
 
-        $table->setHeaders(['Ticket No.', 'Date Start', 'Total Time Spent', 'Date Logged'])
+        $table->setHeaders(['Ticket No.', 'Description', 'Date Start', 'Total Time Spent', 'Date Logged'])
             ->setRows($logs)
             ->setFooterTitle(\sprintf('Total Hours: %sH', $totalHours))
             ->render();
